@@ -1,34 +1,71 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora para Lanches</title>
+    <meta name="description"
+        content="Calculadora de pedidos para lanchonete desenvolvida com Bootstrap 5, jQuery e LocalStorage.">
+    <title>Lanchonete Express | Calculadora de Pedidos</title>
+
     <link href="data:," rel="icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
 </head>
+
 <body>
     <header class="topo">
-        <div class="container py-3">
-            <h1 class="topo-marca h4 mb-0">
-                <i class="bi bi-bag"></i>
-                Calculadora para Lanches
-            </h1>
+        <div class="container d-flex justify-content-between align-items-center py-3">
+            <a class="topo-marca text-decoration-none" href="#" aria-label="Lanchonete Express">
+                <span class="marca-icone"><i class="bi bi-bag-heart-fill"></i></span>
+                <span>
+                    <strong>Lanchonete Express</strong>
+                    <small>Calculadora de pedidos</small>
+                </span>
+            </a>
+
+            <span class="badge rounded-pill status-badge d-none d-sm-inline-flex align-items-center gap-2">
+                <i class="bi bi-circle-fill"></i> Pedido online
+            </span>
         </div>
     </header>
 
     <main class="container py-4 py-lg-5">
-        <div class="row g-4">
-            <div class="col-lg-7">
-                <div class="card">
-                    <div class="card-body">
-                        <h2 class="h5 card-title mb-3">Monte seu pedido</h2>
+        <section class="hero mb-4 mb-lg-5">
+            <div class="row align-items-center g-3">
+                <div class="col-lg-8">
+                    <span class="hero-etiqueta"><i class="bi bi-stars"></i> Monte do seu jeito</span>
+                    <h1 class="display-6 fw-bold mt-2 mb-2">Seu lanche, seu pedido.</h1>
+                    <p class="text-secondary mb-0">Escolha o lanche, adicione seus extras e acompanhe o valor total em
+                        tempo real.</p>
+                </div>
+                <div class="col-lg-4 d-none d-lg-flex justify-content-end">
+                    <div class="hero-ilustracao" aria-hidden="true">
+                        <i class="bi bi-emoji-smile-fill"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                        <div class="mb-4">
-                            <label for="select-lanche" class="form-label">Lanche principal</label>
-                            <select class="form-select" id="select-lanche">
+        <div class="row g-4 align-items-start">
+            <div class="col-lg-7">
+                <div class="card pedido-card border-0">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="d-flex align-items-center gap-3 mb-4">
+                            <div class="secao-icone"><i class="bi bi-basket2-fill"></i></div>
+                            <div>
+                                <h2 class="h4 mb-1">Monte seu pedido</h2>
+                                <p class="text-secondary small mb-0">Preencha as opções abaixo para calcular o total.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="campo-bloco mb-4">
+                            <label for="select-lanche" class="form-label fw-semibold">
+                                <span class="numero-etapa">1</span> Lanche principal
+                            </label>
+                            <select class="form-select form-select-lg" id="select-lanche">
                                 <option value="0">-- Selecione um lanche --</option>
                                 <option value="18.00">X-Burger Clássico — R$ 18,00</option>
                                 <option value="22.00">X-Salada Especial — R$ 22,00</option>
@@ -36,113 +73,203 @@
                             </select>
                         </div>
 
-                        <div class="mb-4">
-                            <span class="form-label d-block">Adicionais</span>
-
-                            <div class="form-check form-switch">
-                                <input class="form-check-input check-adicional" type="checkbox" id="check-queijo" value="3.00">
-                                <label class="form-check-label" for="check-queijo">
-                                    Queijo extra <span class="badge text-bg-light border">R$ 3,00</span>
-                                </label>
+                        <div class="campo-bloco mb-4">
+                            <div class="form-label fw-semibold mb-3">
+                                <span class="numero-etapa">2</span> Adicionais
                             </div>
 
-                            <div class="form-check form-switch">
-                                <input class="form-check-input check-adicional" type="checkbox" id="check-bacon" value="4.00">
-                                <label class="form-check-label" for="check-bacon">
-                                    Bacon <span class="badge text-bg-light border">R$ 4,00</span>
+                            <div class="adicionais-grid">
+                                <label class="adicional-item" for="check-queijo">
+                                    <span class="adicional-info">
+                                        <span class="adicional-icone"><i class="bi bi-plus-circle"></i></span>
+                                        <span><strong>Queijo extra</strong><small>Mais cremosidade</small></span>
+                                    </span>
+                                    <span class="d-flex align-items-center gap-2">
+                                        <span class="badge preco-badge">+ R$ 3,00</span>
+                                        <span class="form-check form-switch m-0">
+                                            <input class="form-check-input check-adicional" type="checkbox"
+                                                role="switch" id="check-queijo" value="3.00"
+                                                aria-label="Adicionar queijo extra">
+                                        </span>
+                                    </span>
                                 </label>
-                            </div>
 
-                            <div class="form-check form-switch">
-                                <input class="form-check-input check-adicional" type="checkbox" id="check-batata" value="8.00">
-                                <label class="form-check-label" for="check-batata">
-                                    Batata frita <span class="badge text-bg-light border">R$ 8,00</span>
+                                <label class="adicional-item" for="check-bacon">
+                                    <span class="adicional-info">
+                                        <span class="adicional-icone"><i class="bi bi-plus-circle"></i></span>
+                                        <span><strong>Bacon</strong><small>Crocante e saboroso</small></span>
+                                    </span>
+                                    <span class="d-flex align-items-center gap-2">
+                                        <span class="badge preco-badge">+ R$ 4,00</span>
+                                        <span class="form-check form-switch m-0">
+                                            <input class="form-check-input check-adicional" type="checkbox"
+                                                role="switch" id="check-bacon" value="4.00"
+                                                aria-label="Adicionar bacon">
+                                        </span>
+                                    </span>
                                 </label>
-                            </div>
 
-                            <div class="form-check form-switch">
-                                <input class="form-check-input check-adicional" type="checkbox" id="check-bebida" value="6.00">
-                                <label class="form-check-label" for="check-bebida">
-                                    Bebida <span class="badge text-bg-light border">R$ 6,00</span>
+                                <label class="adicional-item" for="check-batata">
+                                    <span class="adicional-info">
+                                        <span class="adicional-icone"><i class="bi bi-plus-circle"></i></span>
+                                        <span><strong>Batata frita</strong><small>Porção individual</small></span>
+                                    </span>
+                                    <span class="d-flex align-items-center gap-2">
+                                        <span class="badge preco-badge">+ R$ 8,00</span>
+                                        <span class="form-check form-switch m-0">
+                                            <input class="form-check-input check-adicional" type="checkbox"
+                                                role="switch" id="check-batata" value="8.00"
+                                                aria-label="Adicionar batata frita">
+                                        </span>
+                                    </span>
+                                </label>
+
+                                <label class="adicional-item" for="check-bebida">
+                                    <span class="adicional-info">
+                                        <span class="adicional-icone"><i class="bi bi-plus-circle"></i></span>
+                                        <span><strong>Bebida</strong><small>Refrigerante ou suco</small></span>
+                                    </span>
+                                    <span class="d-flex align-items-center gap-2">
+                                        <span class="badge preco-badge">+ R$ 6,00</span>
+                                        <span class="form-check form-switch m-0">
+                                            <input class="form-check-input check-adicional" type="checkbox"
+                                                role="switch" id="check-bebida" value="6.00"
+                                                aria-label="Adicionar bebida">
+                                        </span>
+                                    </span>
                                 </label>
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label for="input-qtd" class="form-label">Quantidade</label>
-                            <div class="input-group grupo-quantidade">
-                                <button class="btn btn-outline-secondary" type="button" id="btn-diminuir" aria-label="Diminuir quantidade">
-                                    <i class="bi bi-dash-lg"></i>
-                                </button>
-                                <input type="number" class="form-control text-center" id="input-qtd" value="1" min="1">
-                                <button class="btn btn-outline-secondary" type="button" id="btn-aumentar" aria-label="Aumentar quantidade">
-                                    <i class="bi bi-plus-lg"></i>
-                                </button>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-5">
+                                <label for="input-qtd" class="form-label fw-semibold">
+                                    <span class="numero-etapa">3</span> Quantidade
+                                </label>
+                                <div class="input-group grupo-quantidade">
+                                    <button class="btn btn-outline-secondary" type="button" id="btn-diminuir"
+                                        aria-label="Diminuir quantidade">
+                                        <i class="bi bi-dash-lg"></i>
+                                    </button>
+                                    <input type="number" class="form-control text-center fw-bold" id="input-qtd"
+                                        value="1" min="1" max="99" aria-label="Quantidade do pedido">
+                                    <button class="btn btn-outline-secondary" type="button" id="btn-aumentar"
+                                        aria-label="Aumentar quantidade">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <label for="select-entrega" class="form-label fw-semibold">
+                                    <span class="numero-etapa">4</span> Tipo de entrega
+                                </label>
+                                <select class="form-select" id="select-entrega">
+                                    <option value="0.00">Retirar no local — Grátis</option>
+                                    <option value="5.00">Entrega padrão — R$ 5,00</option>
+                                    <option value="10.00">Entrega expressa — R$ 10,00</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label for="select-entrega" class="form-label">Tipo de entrega</label>
-                            <select class="form-select" id="select-entrega">
-                                <option value="0.00">Retirar no local — Grátis</option>
-                                <option value="5.00">Entrega padrão — R$ 5,00</option>
-                                <option value="10.00">Entrega expressa — R$ 10,00</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="input-cupom" class="form-label">Cupom de desconto</label>
+                        <div class="campo-bloco cupom-bloco mb-4">
+                            <label for="input-cupom" class="form-label fw-semibold">
+                                <i class="bi bi-ticket-perforated me-1"></i> Cupom de desconto
+                            </label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="input-cupom" placeholder="Código do cupom">
-                                <button class="btn btn-outline-secondary" type="button" id="btn-aplicar-cupom">Aplicar</button>
+                                <input type="text" class="form-control text-uppercase" id="input-cupom"
+                                    placeholder="Ex.: LANCHE10" maxlength="20">
+                                <button class="btn btn-outline-secondary" type="button"
+                                    id="btn-aplicar-cupom">Aplicar</button>
                             </div>
-                            <div id="feedback-cupom" class="form-text"></div>
+                            <div id="feedback-cupom" class="form-text">Teste o cupom <strong>LANCHE10</strong> para 10%
+                                de desconto.</div>
                         </div>
 
-                        <div class="d-flex gap-2">
-                            <button class="btn btn-primary flex-grow-1" type="button" id="btn-finalizar">
-                                <i class="bi bi-cart-check-fill"></i>
+                        <div class="d-flex flex-column flex-sm-row gap-2 pt-2">
+                            <button class="btn btn-primary btn-lg flex-grow-1" type="button" id="btn-finalizar">
+                                <i class="bi bi-cart-check-fill me-1"></i>
                                 Finalizar Pedido
                             </button>
-                            <button class="btn btn-outline-secondary" type="button" id="btn-limpar">
-                                <i class="bi bi-trash"></i>
+                            <button class="btn btn-outline-secondary btn-lg" type="button" id="btn-limpar">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i>
                                 Limpar
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5">
-                <div class="card resumo-fixo">
-                    <div class="card-body">
-                        <h2 class="h5 card-title mb-3">Resumo do pedido</h2>
 
-                        <ul class="list-group list-group-flush mb-3">
+            <div class="col-lg-5">
+                <div class="card resumo-fixo resumo-card border-0">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div>
+                                <span class="resumo-legenda">SEU PEDIDO</span>
+                                <h2 class="h4 mb-0">Resumo</h2>
+                            </div>
+                            <div class="resumo-icone"><i class="bi bi-receipt-cutoff"></i></div>
+                        </div>
+
+                        <div id="resumo-itens" class="resumo-itens mb-4">
+                            <div class="estado-vazio text-center py-4">
+                                <i class="bi bi-basket3"></i>
+                                <p class="mb-0 mt-2">Seu pedido ainda está vazio.</p>
+                                <small>Selecione um lanche para começar.</small>
+                            </div>
+                        </div>
+
+                        <div class="divisor"></div>
+
+                        <ul class="list-group list-group-flush mb-3 valores-lista">
                             <li class="list-group-item d-flex justify-content-between px-0">
                                 <span>Subtotal</span>
-                                <span id="valor-subtotal">R$ 0,00</span>
+                                <strong id="valor-subtotal">R$ 0,00</strong>
                             </li>
                             <li class="list-group-item d-flex justify-content-between px-0">
                                 <span>Taxa de entrega</span>
-                                <span id="valor-taxa-entrega">R$ 0,00</span>
+                                <strong id="valor-taxa-entrega">R$ 0,00</strong>
                             </li>
-                            <li class="list-group-item d-flex justify-content-between px-0 text-success">
+                            <li class="list-group-item d-flex justify-content-between px-0 desconto-linha">
                                 <span>Desconto</span>
-                                <span id="valor-desconto">- R$ 0,00</span>
+                                <strong id="valor-desconto">- R$ 0,00</strong>
                             </li>
                         </ul>
 
-                        <div class="alert total-destaque d-flex justify-content-between align-items-center fs-4 fw-bold mb-0">
-                            <span>Total</span>
+                        <div class="total-destaque d-flex justify-content-between align-items-end">
+                            <span>
+                                <small>Total a pagar</small>
+                                <strong>Total</strong>
+                            </span>
                             <span id="total-geral">R$ 0,00</span>
                         </div>
+
+                        <p class="resumo-aviso text-center mb-0 mt-3">
+                            <i class="bi bi-shield-check"></i> O rascunho do pedido é salvo no navegador.
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
+    <footer class="container py-4 text-center">
+        <p class="small text-secondary mb-0">Lanchonete Express • Atividade de Programação para Internet 2</p>
+        <p class="small text-secondary mb-0">Desenvolvido por <a class="dev-link" href="https://igdeveloper.com.br" target="_blank" rel="noopener noreferrer">Igor Gonçalves | DEV</a></p>
+    </footer>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast-pedido" class="toast border-0" role="status" aria-live="polite" aria-atomic="true">
+            <div class="toast-body d-flex align-items-center gap-2">
+                <i class="bi bi-check-circle-fill fs-5"></i>
+                <span>Pedido salvo com sucesso no navegador!</span>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/app.js" defer></script>
 </body>
+
 </html>
